@@ -1,10 +1,9 @@
 Mochi8
 ======
-Mochi8 is a CHIP-8/SCHIP toolkit written in Java 8. It includes a Swing based emulator, an assembler and a disassembler.
-
-## Table of Contents ##
-- [Mochi8](#mochi8)
+- Table of Contents
+  - [Overview](#overview)
   - [Installation](#installation)
+  - [Quick Start](#quick-start)
   - [Emulator Usage](#emulator-usage)
   - [Assembler Usage](#assembler-usage)
   - [Assembly Language Reference](#assembly-language-reference)
@@ -15,25 +14,115 @@ Mochi8 is a CHIP-8/SCHIP toolkit written in Java 8. It includes a Swing based em
     - [Instructions](#instructions)
       - [Directives](#directives)
   - [References](#references)
-  
+
+## Overview
+Mochi8 is a CHIP-8/SCHIP toolkit written in Java 8. It includes a Swing based emulator, an assembler and a disassembler.
+If you would like to read more about CHIP-8, visit [CHIP-8 Wikipedia Page](https://en.wikipedia.org/wiki/CHIP-8).
+
+![sample](pics/sample01.png)
+
+*(Screenshot of game Blinky from David Winter's CHIP-8 game pack)*
+
+#### Features
+
+Emulator:
+
+- Supports both CHIP-8/S-CHIP instruction sets 
+- Supports 64x32, 64x64 (CHIP-8 Hires) and 128x64 screen resolutions
+- Supports various window sizes and aspect ratios
+- Supports changing foreground and background colors
+- Supports various speed mode (100Hz to 10,000Hz)
+- Supports misc features such as Windows Always On Top, Pause on Background etc
+
+Assembler / Disassembler:
+- Assembler is mostly Christian Egeberg's CHIPPER v2.11 compatible with a few exceptions
+- Disassembles CHIP-8/S-CHIP binary files
+- Supports forward referencing of variables before they are declared
+- Supports bin/hex/oct mixed notions in expressions, e.g., (9%3) * 2 + #F & 8 - 77/$111
+- Limits: currently only supports assembling to a binary file for emulators. Does not support generating CHIP-48 or other real hardware-recognizable formats.
+- Limits: Not enough error detection during assembling.
+
+#### Why CHIP-8?
+Writing emulators is particularly helpful in understanding how CPU runs and how memory is arranged.  
+CHIP-8 features a small set of instructions that are very well documented and there was no complicated memory modes 
+involved, thus it is a very ideal candidate to use as a show case of writing an emulator.
 
 ## Installation
 
 Java 8 needed.
 
     mvn clean package
+    
+## Quick Start
+
+Follow this quick start guide to get a sip of Mochi8 assembler and emulators.
+
+1. Save the sample Hello source code below.
+    
+
+```ASM
+; Name: hello.asm
+; Author: Jeffrey Bian
+; Description: 
+; 	This is a minimum hello world program for S-CHIP. Assemble with: 
+; 		java -jar hello.asm -o hello.ch8
+;	Then load with mochi8 emulator. This prgram will print 6 numbers 5 4 3 2 1 0 from left to right. 
+;
+
+HIGH				; Enters HIGH resolution mode
+CLS					; Clears the screen
+LD V2, LENGTH		; Set the maximum number
+LD V3, 1
+LD V5, 24			; The Y coords
+
+LOOP:				; Begins the loop
+SUB V2, V3
+LD HF, V2			; Load I with the address of the HiRes Number Sprites
+ADD V4, U			; Increment X coords for each number to print
+DRW V4, V5, H		; Draw!
+SE V2, 0			
+JP LOOP
+
+FIN: JP FIN			; Stays at the screen and don't exit.
+
+LENGTH = 6
+U = #10
+H = 5 * 2
+
+```
+2. Switch to the directory where you have your Mochi8 assembler downloaded, copy the downloaded hello.asm there too. Then type the following command in command line, 
+
+```java -jar <mochi8-0.8.0.jar> asm a -o hello.ch8 hello.asm```
+
+It will assemble the source to a binary file named hello.ch8, which is runnable by the emulator. 
+3. Launch the emulator with the command 
+
+```java -jar mochi8-0.8.0.jar```
+
+It should bring up the emulator main window. If first time run, there will be a popup dialog reminding you of the key mappings. 
+
+4. Hit Control+L (Windows/Linux) or Command + L (Mac OS X), or select File -> Load. Then in the open file dialog, select the generated hello.ch8 and click open.
+
+5. You should be able to see a slow drawing of the game now, if not, please make sure in Emulator menu, "Run on Load" is checked.
+
+6. Have fun! You should be able to see several numbers printed out in the emulator, something like below.
+
+
+![Hello](pics/hello.png)
+
+
 
 ## Emulator Usage
 
 If launching the jar without any parameters, it will invoke the emulator (Swing based).
     
-    java -jar <mochi8-jar-file>
+    java -jar mochi8-0.8.0.jar
 
 ## Assembler Usage
 
 If launching the jar with *asm* as the sub command name, it will invoked the assembler.
     
-    java -jar <mochi8-jar-file> asm <options> input_file
+    java -jar mochi8-0.8.0.jar asm <options> input_file
 
 where the *input_file* argument is required. It could be either the name for the source file to assemble or the binary file to disassemble. 
 
@@ -77,40 +166,8 @@ The basic assembly language structures are instructions, directives, variables a
 
 The CHIP-8 assembly language is highly line oriented and each line takes the format of:
  
-**<label:> instruction | directive | variable assignment**
- 
-Below is an example Hello World program in CHIP-8 Assembly:
+```<label:> instruction | directive | variable assignment```
 
-```
-; Name: hello.asm
-; Author: Jeffrey Bian
-; Description: 
-; 	This is a minimum hello world program for S-CHIP. Assemble with: 
-; 		java -jar hello.asm -o hello.ch8
-;	Then load with mochi8 emulator. This prgram will print 6 numbers 5 4 3 2 1 0 from left to right. 
-;
-
-HIGH				; Enters HIGH resolution mode
-CLS					; Clears the screen
-LD V2, LENGTH		; Set the maximum number
-LD V3, 1
-LD V5, 24			; The Y coords
-
-LOOP:				; Begins the loop
-SUB V2, V3
-LD HF, V2			; Load I with the address of the HiRes Number Sprites
-ADD V4, U			; Increment X coords for each number to print
-DRW V4, V5, H		; Draw!
-SE V2, 0			
-JP LOOP
-
-FIN: JP FIN			; Stays at the screen and don't exit.
-
-LENGTH = 6
-U = #10
-H = 5 * 2
-
-```
 
 #### Expressions & Arithmetic
 Mochi8 supports expressions anywhere a constant may appear. An expression can contain any variables, labels, constants and arithmetic operators. E.g., $111 * SPRITE_N + (~COLLISION) + 3/2 is a valid expression. 
@@ -320,4 +377,16 @@ The section in below is excerpted from *CHIPPER.doc*.
 Note: directives such as XREF, END etc are recognized but simply ignored. 
 
 ## References
-CHIPPER.doc and a package of games from [David Winters' CHIP-8 Pack](http://www.pong-story.com/chip8/).
+
+1. David Winter, CHIP-8 game source code and his documentations (CHIPPER.doc ) [[Link]](http://www.pong-story.com/chip8/)
+2. Cowgod's CHIP-8 Reference [[Link]](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM)
+3. Erik Bryntse' S-CHIP Reference [[Link]](http://devernay.free.fr/hacks/chip8/schip.txt)
+4. CHIP-8 Pack, a compilation of works from various contributors, used extensively for testing. [[Link]](http://chip8.com/?page=109)
+5. Mkoelew@yahoo.com's Fish'n'Chips Emulator [[Link]](http://www.chip8.com/downloads/FishNChips.zip)
+6. Buzz sound comes from Online Tone Generator [[Link]](http://onlinetonegenerator.com/)
+
+I used Cowgod's CHIP-8 documents (1) extensively as my main reference, and the programs shipped in CHIP-8 pack (3) as 
+my tests for the emulator. 
+
+For the assembler part, the main reference is David Winter's compilation of documentations especially CHIPPER.doc 
+and CHIP8.doc.
