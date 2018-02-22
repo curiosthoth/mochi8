@@ -26,7 +26,7 @@ package com.taibaisoft.framework;
 
 
 /**
- * A generic abstract CPU support upto 32-bit addressing.
+ * A generic abstract CPU support up to 32-bit addressing.
  * @author jeffreybian
  *
  */

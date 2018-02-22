@@ -320,4 +320,4 @@ The section in below is excerpted from *CHIPPER.doc*.
 Note: directives such as XREF, END etc are recognized but simply ignored. 
 
 ## References
-CHIPPER.doc from [David Winters' CHIP-8 Pack](http://www.pong-story.com/chip8/).
+CHIPPER.doc and a package of games from [David Winters' CHIP-8 Pack](http://www.pong-story.com/chip8/).

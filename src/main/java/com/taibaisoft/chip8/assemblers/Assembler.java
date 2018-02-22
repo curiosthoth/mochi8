@@ -59,7 +59,7 @@ public class Assembler {
 	public static final char CHAR_QUOTE = '\'';
 	public static final char TK_DELIM_04 = '='; // Well! This is not really a delim
 	public static final char CHAR_COMMENT_START = ';';
-	private static final int MAX_PASSES = 2;
+	private static final int MAX_PASSES = 32;
 	private static final int FIRST_PASS = 0;
 	private static final int SECOND_PASS = 1;
 	private static final int MAX_SYMBOL_RESOLUTION_PASSES = 32;

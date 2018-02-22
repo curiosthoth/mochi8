@@ -83,10 +83,10 @@ public class ToneGenerator {
 			} catch (LineUnavailableException e) {
 				e.printStackTrace();
 			}
-			// Change default value
-			if (!supportedFormats_.isEmpty()) {
-				defaultSampleRate_ = (int) supportedFormats_.get(0).getSampleRate();
-			}
+//			// Change default value
+//			if (!supportedFormats_.isEmpty()) {
+//				defaultSampleRate_ = (int) supportedFormats_.get(0).getSampleRate();
+//			}
 		}
 	}
 	public Clip generateAudioClipFromTones(List<Tone> tones) {
@@ -106,7 +106,6 @@ public class ToneGenerator {
 			for (AudioFormat fmt : supportedFormats_) {
 				if ( format.matches(fmt) ) {
 					foundMatch = true;
-					format = fmt;
 					break;
 				}
 			}
@@ -119,7 +118,7 @@ public class ToneGenerator {
 					new ByteArrayInputStream(bb), format, bb.length);
 			clip.open(ais);
 		} catch (Exception e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 			clip = null;
 		}
 		return clip;
