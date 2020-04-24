@@ -385,7 +385,7 @@ Note: directives such as XREF, END etc are recognized but simply ignored.
 5. Mkoelew@yahoo.com's Fish'n'Chips Emulator [[Link]](http://www.chip8.com/downloads/FishNChips.zip)
 6. Buzz sound comes from Online Tone Generator [[Link]](http://onlinetonegenerator.com/)
 
-I used Cowgod's CHIP-8 documents (1) extensively as my main reference, and the programs shipped in CHIP-8 pack (3) as 
+I used Cowgod's CHIP-8 documents ([[Link]](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM)) extensively as my main reference, and the programs shipped in CHIP-8 pack ([[Link]](http://chip8.com/?page=109)) as 
 my tests for the emulator. 
 
 For the assembler part, the main reference is David Winter's compilation of documentations especially CHIPPER.doc 
