@@ -95,6 +95,7 @@ H = 5 * 2
 ```java -jar <mochi8-0.8.0.jar> asm a -o hello.ch8 hello.asm```
 
 It will assemble the source to a binary file named hello.ch8, which is runnable by the emulator. 
+
 3. Launch the emulator with the command 
 
 ```java -jar mochi8-0.8.0.jar```
@@ -103,13 +104,13 @@ It should bring up the emulator main window. If first time run, there will be a 
 
 4. Hit Control+L (Windows/Linux) or Command + L (Mac OS X), or select File -> Load. Then in the open file dialog, select the generated hello.ch8 and click open.
 
-5. You should be able to see a slow drawing of the game now, if not, please make sure in Emulator menu, "Run on Load" is checked.
-
-6. Have fun! You should be able to see several numbers printed out in the emulator, something like below.
+5. You should be able to see a slow drawing on the screen now. If not, please make sure in Emulator menu, "Run on Load" is checked. The output looks like something like below,
 
 
 ![Hello](pics/hello.png)
 
+
+Have fun! 
 
 
 ## Emulator Usage
