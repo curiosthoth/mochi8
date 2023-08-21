@@ -65,7 +65,7 @@ Follow this quick start guide to get a sip of Mochi8 assembler and emulators.
 ; Author: Jeffrey Bian
 ; Description: 
 ; 	This is a minimum hello world program for S-CHIP. Assemble with: 
-; 		java -jar hello.asm -o hello.ch8
+; 		java -jar <mochi8-0.8.0.jar> -a asmhello.asm -o hello.ch8
 ;	Then load with mochi8 emulator. This prgram will print 6 numbers 5 4 3 2 1 0 from left to right. 
 ;
 
@@ -154,15 +154,21 @@ The reference text presented here shows all supported instructions and directive
 #### The Basics
 The basic assembly language structures are instructions, directives, variables and labels. 
 
-* Instructions  
-    One instruction maps to one 16-bit long opcode in the final assembled file. Say, the instruction *ADD V4, 32* will translate to 7432, a 16-bit long opcode in final assembled file. Only 1 instruction per line is allowed. An instruction starts with the name of the instruction, then white spaces, then a comma separated list of arguments.
+* Instructions
 
-* Directives 
-    Assistant language structure to make writing programs easier. Directives normally do not consume any program space in the final file. It only helps control the program structure. There are two categories of directives, prefix and infix. Most directives fall into the former, there are only two falling in the latter, namely the *EQU* and *=* directives.
+One instruction maps to one 16-bit long opcode in the final assembled file. Say, the instruction *ADD V4, 32* will translate to 7432, a 16-bit long opcode in final assembled file. Only 1 instruction per line is allowed. An instruction starts with the name of the instruction, then white spaces, then a comma separated list of arguments.
+
+* Directives
+
+Assistant language structure to make writing programs easier. Directives normally do not consume any program space in the final file. It only helps control the program structure. There are two categories of directives, prefix and infix. Most directives fall into the former, there are only two falling in the latter, namely the *EQU* and *=* directives.
+
 * Variables  
-    Variables are only for assemble time. A variable is defined by an infix directive *EQU* or *=*. E.g., Score EQU 33 . There can only be one variable definition per line.
+
+Variables are only for assemble time. A variable is defined by an infix directive *EQU* or *=*. E.g., Score EQU 33 . There can only be one variable definition per line.
+
 * Labels  
-    Labels are optional. There could be only one label per line and it must appear before any other text in one line. E.g., 
+
+Labels are optional. There could be only one label per line and it must appear before any other text in one line. E.g., 
 *Loop: JP Loop* gives an infinite loop. Labels end with a colon (:) and will always have a default value as the current in memory address, which is the loading address + the file offset.
 
 The CHIP-8 assembly language is highly line oriented and each line takes the format of:
